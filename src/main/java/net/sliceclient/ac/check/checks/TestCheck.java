@@ -7,7 +7,7 @@ import net.sliceclient.ac.check.data.CheckInfo;
 import net.sliceclient.ac.packet.ACPacketType;
 import net.sliceclient.ac.packet.event.PacketInfo;
 
-@CheckInfo(name = "TestCheck", type = "A", description = "Test check")
+@CheckInfo(name = "TestCheck", description = "Test check")
 public class TestCheck extends Check {
 
     public TestCheck(ACPlayer player) {

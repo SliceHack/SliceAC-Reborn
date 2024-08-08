@@ -9,7 +9,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CheckInfo {
     String name();
-    String type();
     String description() default "No description provided.";
     int maxViolations() default -1;
 }

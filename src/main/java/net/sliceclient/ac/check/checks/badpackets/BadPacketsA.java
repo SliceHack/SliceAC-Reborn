@@ -7,7 +7,7 @@ import net.sliceclient.ac.check.data.CheckInfo;
 import net.sliceclient.ac.packet.ACPacketType;
 import net.sliceclient.ac.packet.event.PacketInfo;
 
-@CheckInfo(name = "BadPackets", type = "A", description = "Checks for invalid HotBar selections")
+@CheckInfo(name = "BadPackets", description = "Checks for invalid HotBar selections")
 public class BadPacketsA extends Check {
 
     private int lastSlot = -1;

@@ -1,9 +1,9 @@
 package net.sliceclient.ac.check;
 
 import lombok.Getter;
-import net.sliceclient.ac.check.checks.TestCheck;
 import net.sliceclient.ac.check.checks.badpackets.BadPacketsA;
 import net.sliceclient.ac.check.checks.badpackets.BadPacketsB;
+import net.sliceclient.ac.check.checks.movement.MovementA;
 import net.sliceclient.ac.check.data.ACPlayer;
 import net.sliceclient.ac.packet.event.PacketEventManager;
 import org.apache.logging.log4j.LogManager;
@@ -21,12 +21,15 @@ public class CheckManager {
 
     private final Class<?>[] classes = new Class[]{
             BadPacketsA.class,
-            BadPacketsB.class
+            BadPacketsB.class,
+            MovementA.class
     };
 
     private final List<Check> checks = new ArrayList<>();
 
     public CheckManager(ACPlayer player) {
+        player.setCheckManager(this);
+
         Arrays.stream(classes).forEach(clazz -> {
             try {
                 Check check = (Check) clazz.getConstructor(ACPlayer.class).newInstance(player);
@@ -34,7 +37,7 @@ public class CheckManager {
                 checks.add(check);
                 PacketEventManager.register(check, player.getPlayer());
             } catch (Exception e) {
-                logger.error("Failed to register check {}", clazz.getSimpleName());
+                logger.error("Failed to register check {}", clazz.getSimpleName(), e);
             }
         });
     }

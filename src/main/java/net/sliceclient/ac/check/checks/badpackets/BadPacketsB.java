@@ -7,7 +7,7 @@ import net.sliceclient.ac.check.data.CheckInfo;
 import net.sliceclient.ac.packet.ACPacketType;
 import net.sliceclient.ac.packet.event.PacketInfo;
 
-@CheckInfo(name = "BadPackets", type = "B", description = "Checks for invalid pitch")
+@CheckInfo(name = "BadPackets", description = "Checks for invalid pitch")
 public class BadPacketsB extends Check {
 
     public BadPacketsB(ACPlayer player) {
