@@ -1,5 +1,0 @@
-name: SliceAC
-version: '1.0-SNAPSHOT'
-main: net.sliceclient.ac.SliceAC
-api-version: '1.20.6'
-depend: [ ProtocolLib ]
