@@ -23,6 +23,10 @@ public class PacketEventManager {
 
     private final static List<RegisteredPacketEvent> packetListeners = new ArrayList<>();
 
+    public static void register(Object listener) {
+        register(listener, null);
+    }
+
     public static void register(Object listener, Player player) {
         for(Method method : listener.getClass().getDeclaredMethods()) {
             if(!method.isAnnotationPresent(PacketInfo.class)) continue; // not listening for packets
@@ -40,7 +44,7 @@ public class PacketEventManager {
             }
 
             for(PacketType type : types) {
-                logger.info("Registering packet listener for " + type);
+                logger.info("Registering packet listener for {}", type);
 
                 packetListeners.add(new RegisteredPacketEvent(type, method, listener, player));
             }

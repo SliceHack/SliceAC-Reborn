@@ -2,6 +2,7 @@ package net.sliceclient.ac.check;
 
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
+import net.sliceclient.ac.SliceAC;
 import net.sliceclient.ac.check.data.ACPlayer;
 import net.sliceclient.ac.check.data.CheckInfo;
 import org.bukkit.Bukkit;
@@ -45,6 +46,13 @@ public class Check {
 
         Component component = Component.text(stringBuilder.toString()).hoverEvent(Component.text(message));
 
+        boolean testServer = SliceAC.getPlugin(SliceAC.class).isTestServer();
+
+        if(testServer) {
+            player.getPlayer().sendMessage(component);
+            return;
+        }
+
         Bukkit.getOnlinePlayers().stream()
                 .filter(player -> player.isOp() || player.hasPermission("slice.alerts"))
                 .forEach(player -> player.sendMessage(component));
@@ -72,9 +80,7 @@ public class Check {
             int remainder = (count - 1) % alphabet.length();
             return alphabet.charAt(quotient) + String.valueOf(alphabet.charAt(remainder));
         } else {
-            return count != 0 ? alphabet.charAt(count) + "" : alphabet.charAt(0) + "";
+            return String.valueOf(alphabet.charAt(count));
         }
     }
-
-
 }

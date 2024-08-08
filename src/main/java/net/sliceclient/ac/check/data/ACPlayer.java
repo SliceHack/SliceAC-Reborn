@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 @RequiredArgsConstructor
 public class ACPlayer {
     @NonNull private final Player player;
-
+    private String brand = "Unknown Brand";
     private CheckManager checkManager;
 
     public boolean onGround() {

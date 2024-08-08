@@ -23,7 +23,7 @@ public class MovementA extends Check {
         if(onGround && !player.onGround()) fakeOnGroundTicks++;
         else fakeOnGroundTicks = 0;
 
-        if(fakeOnGroundTicks > 5) {
+        if(fakeOnGroundTicks > 1) {
             flag("fakeOnGroundTicks=" + fakeOnGroundTicks + " onGround=" + player.onGround() + " groundState=true");
         }
 
