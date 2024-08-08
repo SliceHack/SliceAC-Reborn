@@ -15,7 +15,7 @@ public class MovementC extends Check {
         super(player);
     }
 
-    @PacketInfo(ACPacketType.BLOCK_PLACE)
+    @PacketInfo({ ACPacketType.BLOCK_PLACE} )
     public void onBlockPlace(PacketEvent event) {
         float cursorX = event.getPacket().getFloat().read(0);
         float cursorY = event.getPacket().getFloat().read(1);
