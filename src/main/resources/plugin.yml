@@ -1,0 +1,5 @@
+name: SliceAC
+version: '${project.version}'
+main: net.sliceclient.ac.SliceAC
+api-version: '1.20.6'
+depend: [ ProtocolLib ]
