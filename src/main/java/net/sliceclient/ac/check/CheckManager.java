@@ -30,7 +30,6 @@ public class CheckManager {
             BadPacketsC.class,
             MovementA.class,
             MovementB.class,
-            MovementC.class
     };
 
     private final List<Check> checks = new ArrayList<>();
@@ -61,6 +60,11 @@ public class CheckManager {
         this.player.setBrand(brand);
 
         SliceAC.getPlugin(SliceAC.class).getBrandQueue().remove(player.getPlayer());
+
+        if(SliceAC.getPlugin(SliceAC.class).isTestServer()) {
+            player.getPlayer().sendMessage(str);
+            return;
+        }
 
         Bukkit.getOnlinePlayers().stream()
                 .filter(onlinePlayer -> onlinePlayer.isOp() || onlinePlayer.hasPermission("slice.alerts"))

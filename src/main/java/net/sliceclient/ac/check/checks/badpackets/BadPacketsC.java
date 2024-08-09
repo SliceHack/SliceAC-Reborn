@@ -55,6 +55,4 @@ public class BadPacketsC extends Check {
         this.lastSwingTick++;
     }
 
-
-
 }
