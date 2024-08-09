@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.sliceclient.ac.SliceAC;
 import net.sliceclient.ac.check.checks.badpackets.BadPacketsA;
 import net.sliceclient.ac.check.checks.badpackets.BadPacketsB;
+import net.sliceclient.ac.check.checks.badpackets.BadPacketsC;
 import net.sliceclient.ac.check.checks.movement.MovementA;
 import net.sliceclient.ac.check.checks.movement.MovementB;
 import net.sliceclient.ac.check.data.ACPlayer;
@@ -25,8 +26,9 @@ public class CheckManager {
     private final Class<?>[] classes = new Class[]{
             BadPacketsA.class,
             BadPacketsB.class,
+            BadPacketsC.class,
             MovementA.class,
-            MovementB.class
+            MovementB.class,
     };
 
     private final List<Check> checks = new ArrayList<>();
@@ -57,6 +59,11 @@ public class CheckManager {
         this.player.setBrand(brand);
 
         SliceAC.getPlugin(SliceAC.class).getBrandQueue().remove(player.getPlayer());
+
+        if(SliceAC.getPlugin(SliceAC.class).isTestServer()) {
+            player.getPlayer().sendMessage(str);
+            return;
+        }
 
         Bukkit.getOnlinePlayers().stream()
                 .filter(onlinePlayer -> onlinePlayer.isOp() || onlinePlayer.hasPermission("slice.alerts"))

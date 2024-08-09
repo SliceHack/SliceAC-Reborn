@@ -40,6 +40,10 @@ public class PacketEventManager {
                     break;
                 }
 
+                if(type == null) {
+                    throw new IllegalArgumentException("Packet type cannot be null");
+                }
+
                 types.add(type.packetType());
             }
 
@@ -57,7 +61,7 @@ public class PacketEventManager {
 
     public static void handle(PacketType type, PacketEvent event) {
         packetListeners.stream()
-                .filter(packetEvent -> packetEvent.getType().equals(type))
+                .filter(packetEvent -> packetEvent.getType() != null && packetEvent.getType().equals(type))
                 .filter(packetEvent -> packetEvent.getPlayer() == null || packetEvent.getPlayer().equals(event.getPlayer()))
                 .forEach(packetEvent -> {
                     int args = packetEvent.getMethod().getParameterCount();
