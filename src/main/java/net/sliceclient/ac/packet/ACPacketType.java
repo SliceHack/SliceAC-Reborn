@@ -2,6 +2,8 @@ package net.sliceclient.ac.packet;
 
 import com.comphenix.protocol.PacketType;
 
+import java.lang.reflect.Field;
+
 public enum ACPacketType {
     ALL, /** every packet **/
 
@@ -58,11 +60,12 @@ public enum ACPacketType {
     BLOCK_PLACE;
 
     public PacketType packetType() {
-        return PacketType.Play.Client.getInstance().values()
-                .stream()
-                .filter(type -> type.name().equals(name()))
-                .findFirst()
-                .orElse(null);
+        try {
+            Field field = PacketType.Play.Client.class.getDeclaredField(name());
+            return (PacketType) field.get(null);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException("Failed to get packet type for " + name(), e);
+        }
     }
 
 }

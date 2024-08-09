@@ -1,5 +1,6 @@
 package net.sliceclient.ac.check.checks.badpackets;
 
+import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketEvent;
 import net.sliceclient.ac.check.Check;
 import net.sliceclient.ac.check.data.ACPlayer;
