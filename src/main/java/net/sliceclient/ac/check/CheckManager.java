@@ -7,6 +7,7 @@ import net.sliceclient.ac.check.checks.badpackets.BadPacketsB;
 import net.sliceclient.ac.check.checks.badpackets.BadPacketsC;
 import net.sliceclient.ac.check.checks.movement.MovementA;
 import net.sliceclient.ac.check.checks.movement.MovementB;
+import net.sliceclient.ac.check.checks.movement.MovementC;
 import net.sliceclient.ac.check.data.ACPlayer;
 import net.sliceclient.ac.packet.event.PacketEventManager;
 import org.apache.logging.log4j.LogManager;
@@ -29,6 +30,7 @@ public class CheckManager {
             BadPacketsC.class,
             MovementA.class,
             MovementB.class,
+            MovementC.class
     };
 
     private final List<Check> checks = new ArrayList<>();

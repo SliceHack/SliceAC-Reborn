@@ -7,13 +7,12 @@ import net.sliceclient.ac.check.data.CheckInfo;
 import net.sliceclient.ac.packet.ACPacketType;
 import net.sliceclient.ac.packet.event.PacketInfo;
 
-@CheckInfo(name = "Movement", description = "Checks for Speed in air")
-public class MovementB extends Check {
+@CheckInfo(name = "Movement", description = "Checks for Strafe")
+public class MovementC extends Check {
 
-    private double lastDeltaXZ, lastX, lastZ;
-    private int airTicks;
+    private double lastStrafe, lastX, lastZ;
 
-    public MovementB(ACPlayer player) {
+    public MovementC(ACPlayer player) {
         super(player);
     }
 
@@ -27,26 +26,25 @@ public class MovementB extends Check {
 
         double x = event.getPacket().getDoubles().read(0);
         double z = event.getPacket().getDoubles().read(2);
-        double deltaXZ = Math.hypot(x - this.lastX, z - this.lastZ);
 
-        double newDeltaXZ = deltaXZ * 0.98F;
-        double motionXZ = deltaXZ - newDeltaXZ;
+        if(lastX == x && lastZ == z) {
+            this.lastX = x;
+            this.lastZ = z;
+            return;
+        }
 
-        double lastDeltaXZ = this.lastDeltaXZ * 0.98F;
-        double lastMotionX = this.lastDeltaXZ - lastDeltaXZ;
+        double deltaX = x - this.lastX;
+        double deltaZ = z - this.lastZ;
+        double strafe = Math.abs(Math.hypot(deltaX, deltaZ));
 
-        boolean isInAir = !player.onGround();
-
-        if(!isDisabled() && isInAir && airTicks < 10
-                && motionXZ > 0.01
-                && lastMotionX > 0.01) {
-            flag("motionXZ=" + motionXZ + " airTicks=" + airTicks);
+        double check = 0.46;
+        if(strafe > check && lastStrafe > check && !isDisabled()) {
+            flag("strafe=" + strafe + " lastStrafe=" + lastStrafe);
         }
 
         this.updateDisabledTicks();
-        this.lastDeltaXZ = deltaXZ;
+        this.lastStrafe = strafe;
         this.lastX = x;
         this.lastZ = z;
-        this.airTicks = isInAir ? this.airTicks + 1 : 0;
     }
 }
