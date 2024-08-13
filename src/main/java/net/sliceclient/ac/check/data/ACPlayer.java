@@ -32,8 +32,8 @@ public class ACPlayer {
         return false;
     }
 
-    public boolean hasElytra() {
-        return player.getInventory().getChestplate() != null && player.getInventory().getChestplate().getType() == Material.ELYTRA;
+    public boolean isBlocking() {
+        return player.isBlocking();
     }
 
     public boolean isFlying() {

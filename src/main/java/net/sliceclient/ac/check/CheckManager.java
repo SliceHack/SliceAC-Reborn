@@ -5,6 +5,7 @@ import net.sliceclient.ac.SliceAC;
 import net.sliceclient.ac.check.checks.badpackets.BadPacketsA;
 import net.sliceclient.ac.check.checks.badpackets.BadPacketsB;
 import net.sliceclient.ac.check.checks.badpackets.BadPacketsC;
+import net.sliceclient.ac.check.checks.combat.CombatA;
 import net.sliceclient.ac.check.checks.movement.MovementA;
 import net.sliceclient.ac.check.checks.movement.MovementB;
 import net.sliceclient.ac.check.checks.movement.MovementC;
@@ -32,7 +33,8 @@ public class CheckManager {
             MovementA.class,
             MovementB.class,
             MovementC.class,
-            MovementD.class
+            MovementD.class,
+            CombatA.class
     };
 
     private final List<Check> checks = new ArrayList<>();
