@@ -19,7 +19,8 @@ public class BrandListener implements PluginMessageListener {
         ByteArrayDataInput dataInput = ByteStreams.newDataInput(bytes);
         String brand = dataInput.readLine();
 
-        SliceAC.getPlugin(SliceAC.class).getBrandQueue().put(player, brand);
+        assert brand != null;
+        SliceAC.getPlugin(SliceAC.class).getBrandQueue().put(player, brand.substring(1));
     }
     
 }
