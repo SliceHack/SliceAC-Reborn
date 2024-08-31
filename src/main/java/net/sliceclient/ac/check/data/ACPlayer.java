@@ -3,6 +3,7 @@ package net.sliceclient.ac.check.data;
 import lombok.*;
 import net.sliceclient.ac.check.CheckManager;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 @Getter @Setter
@@ -31,4 +32,11 @@ public class ACPlayer {
         return false;
     }
 
+    public boolean isBlocking() {
+        return player.isBlocking();
+    }
+
+    public boolean isFlying() {
+        return player.isFlying() || player.isGliding();
+    }
 }

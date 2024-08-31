@@ -7,6 +7,7 @@ import com.comphenix.protocol.events.PacketListener;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
+import net.sliceclient.ac.check.Check;
 import net.sliceclient.ac.packet.ACPacketType;
 import net.sliceclient.ac.packet.PacketManager;
 import org.apache.logging.log4j.LogManager;

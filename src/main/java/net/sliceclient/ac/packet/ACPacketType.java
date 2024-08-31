@@ -57,7 +57,10 @@ public enum ACPacketType {
     ARM_ANIMATION,
     SPECTATE,
     USE_ITEM,
-    BLOCK_PLACE;
+    BLOCK_PLACE,
+    @Deprecated TRANSACTION,
+    @Deprecated FLYING,
+    @Deprecated CHAT_PREVIEW;
 
     public PacketType packetType() {
         try {

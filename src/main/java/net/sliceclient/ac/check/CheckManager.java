@@ -5,8 +5,12 @@ import net.sliceclient.ac.SliceAC;
 import net.sliceclient.ac.check.checks.badpackets.BadPacketsA;
 import net.sliceclient.ac.check.checks.badpackets.BadPacketsB;
 import net.sliceclient.ac.check.checks.badpackets.BadPacketsC;
+import net.sliceclient.ac.check.checks.badpackets.BadPacketsD;
+import net.sliceclient.ac.check.checks.combat.CombatA;
 import net.sliceclient.ac.check.checks.movement.MovementA;
 import net.sliceclient.ac.check.checks.movement.MovementB;
+import net.sliceclient.ac.check.checks.movement.MovementC;
+import net.sliceclient.ac.check.checks.movement.MovementD;
 import net.sliceclient.ac.check.data.ACPlayer;
 import net.sliceclient.ac.packet.event.PacketEventManager;
 import org.apache.logging.log4j.LogManager;
@@ -24,11 +28,20 @@ public class CheckManager {
     private final static Map<ACPlayer, CheckManager> managerMap = new HashMap<>();
 
     private final Class<?>[] classes = new Class[]{
+            // BadPackets
             BadPacketsA.class,
             BadPacketsB.class,
             BadPacketsC.class,
+            BadPacketsD.class,
+
+            // Movement
             MovementA.class,
             MovementB.class,
+            MovementC.class,
+            MovementD.class,
+
+            // Combat
+            CombatA.class,
     };
 
     private final List<Check> checks = new ArrayList<>();

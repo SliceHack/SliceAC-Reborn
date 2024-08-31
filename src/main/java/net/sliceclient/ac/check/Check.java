@@ -1,6 +1,7 @@
 package net.sliceclient.ac.check;
 
 import lombok.Getter;
+import lombok.Setter;
 import net.kyori.adventure.text.Component;
 import net.sliceclient.ac.SliceAC;
 import net.sliceclient.ac.check.data.ACPlayer;
@@ -19,6 +20,9 @@ public class Check {
     protected final ACPlayer player;
     protected final String name, type, description;
     protected final int maxViolations;
+
+    @Setter
+    private int disabledTicks;
 
     protected int violations;
 
@@ -45,7 +49,14 @@ public class Check {
         }
 
         Component component = Component.text(stringBuilder.toString()).hoverEvent(Component.text(message));
+        sendMessage(component);
+    }
 
+    public void debug(String message) {
+        sendMessage(Component.text("§c[§7DEBUG§c] §7" + message));
+    }
+
+    private void sendMessage(Component component) {
         boolean testServer = SliceAC.getPlugin(SliceAC.class).isTestServer();
 
         if(testServer) {
@@ -82,5 +93,19 @@ public class Check {
         } else {
             return String.valueOf(alphabet.charAt(count));
         }
+    }
+
+    public boolean isDisabled() {
+        return disabledTicks > 0;
+    }
+
+    public void updateDisabledTicks() {
+        if(disabledTicks > 0) {
+            disabledTicks--;
+        }
+    }
+
+    public void addChatMessage(String message) {
+        Bukkit.broadcast(Component.text(message));
     }
 }
