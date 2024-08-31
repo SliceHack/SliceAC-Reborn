@@ -5,6 +5,7 @@ import net.sliceclient.ac.SliceAC;
 import net.sliceclient.ac.check.checks.badpackets.BadPacketsA;
 import net.sliceclient.ac.check.checks.badpackets.BadPacketsB;
 import net.sliceclient.ac.check.checks.badpackets.BadPacketsC;
+import net.sliceclient.ac.check.checks.badpackets.BadPacketsD;
 import net.sliceclient.ac.check.checks.combat.CombatA;
 import net.sliceclient.ac.check.checks.movement.MovementA;
 import net.sliceclient.ac.check.checks.movement.MovementB;
@@ -27,14 +28,20 @@ public class CheckManager {
     private final static Map<ACPlayer, CheckManager> managerMap = new HashMap<>();
 
     private final Class<?>[] classes = new Class[]{
+            // BadPackets
             BadPacketsA.class,
             BadPacketsB.class,
             BadPacketsC.class,
+            BadPacketsD.class,
+
+            // Movement
             MovementA.class,
             MovementB.class,
             MovementC.class,
             MovementD.class,
-            CombatA.class
+
+            // Combat
+            CombatA.class,
     };
 
     private final List<Check> checks = new ArrayList<>();

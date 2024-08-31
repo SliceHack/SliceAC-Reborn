@@ -16,7 +16,6 @@ public class TestCheck extends Check {
 
     @PacketInfo({ACPacketType.POSITION, ACPacketType.POSITION_LOOK, ACPacketType.LOOK})
     public void onUpdate(PacketEvent event) {
-        event.getPlayer().sendMessage(name + " " + description + " " + event.getPlayer() + " " + player.getPlayer().getName());
     }
 
 }

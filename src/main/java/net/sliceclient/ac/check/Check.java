@@ -49,7 +49,14 @@ public class Check {
         }
 
         Component component = Component.text(stringBuilder.toString()).hoverEvent(Component.text(message));
+        sendMessage(component);
+    }
 
+    public void debug(String message) {
+        sendMessage(Component.text("§c[§7DEBUG§c] §7" + message));
+    }
+
+    private void sendMessage(Component component) {
         boolean testServer = SliceAC.getPlugin(SliceAC.class).isTestServer();
 
         if(testServer) {

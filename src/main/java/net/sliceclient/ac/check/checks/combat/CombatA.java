@@ -27,7 +27,7 @@ public class CombatA extends Check {
     public void onPacket(PacketEvent event) {
         if(event.getPacketType() == ACPacketType.USE_ENTITY.packetType()) {
             if(player.isBlocking() && lastBlockHit && lastReleaseBlockTick == 0) {
-                flag("lastReleaseBlockTick=" + lastReleaseBlockTick + " lastBlockHit=true blockState=true");
+                flag("lastReleaseBlockTick=" + lastReleaseBlockTick);
             }
 
             this.lastBlockHit = player.isBlocking();
