@@ -20,7 +20,7 @@ public class MovementC extends Check {
     public void onPlayerUpdate(PacketEvent event) {
         // ignored 🤔😝😝😝
         if(player.isFlying()) {
-            setDisabledTicks(10);
+            setDisabledTicks(20);
             return;
         }
 
@@ -46,5 +46,11 @@ public class MovementC extends Check {
         this.lastStrafe = strafe;
         this.lastX = x;
         this.lastZ = z;
+
+        if(isDisabled()) {
+            this.lastStrafe = 0;
+            this.lastX = x;
+            this.lastZ = z;
+        }
     }
 }

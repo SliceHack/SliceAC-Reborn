@@ -1,7 +1,6 @@
 package net.sliceclient.ac.check.checks.badpackets;
 
 import com.comphenix.protocol.events.PacketEvent;
-import net.kyori.adventure.text.Component;
 import net.sliceclient.ac.check.Check;
 import net.sliceclient.ac.check.data.ACPlayer;
 import net.sliceclient.ac.check.data.CheckInfo;
@@ -20,12 +19,19 @@ public class BadPacketsD extends Check {
     }
 
     // I know I should not be doing it this way, but I can't figure out how to do it properly and I ain't got that time for that
-    @PacketInfo({ACPacketType.USE_ENTITY, ACPacketType.USE_ITEM})
+    @PacketInfo({
+            ACPacketType.USE_ENTITY,
+            ACPacketType.USE_ITEM
+    })
     public void onUse(PacketEvent event) {
         setDisabledTicks(5);
     }
 
-    @PacketInfo({ACPacketType.POSITION_LOOK, ACPacketType.LOOK, ACPacketType.TELEPORT_ACCEPT})
+    @PacketInfo({
+            ACPacketType.POSITION_LOOK,
+            ACPacketType.LOOK,
+            ACPacketType.TELEPORT_ACCEPT
+    })
     public void onPacket(PacketEvent event) {
         if (event.getPacket().getType() == ACPacketType.TELEPORT_ACCEPT.packetType()) {
             lastPacketWasTeleport = true;
@@ -54,7 +60,10 @@ public class BadPacketsD extends Check {
         }
     }
 
-    @PacketInfo({ACPacketType.POSITION_LOOK, ACPacketType.LOOK, ACPacketType.GROUND, ACPacketType.FLYING})
+    @PacketInfo({
+            ACPacketType.POSITION_LOOK,
+            ACPacketType.LOOK,
+    })
     public void onTick(PacketEvent event) {
         updateDisabledTicks();
     }
