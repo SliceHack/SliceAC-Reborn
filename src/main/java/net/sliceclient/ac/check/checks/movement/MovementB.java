@@ -21,7 +21,7 @@ public class MovementB extends Check {
     public void onPlayerUpdate(PacketEvent event) {
         // ignored 🤔😝😝😝
         if(player.isFlying()) {
-            setDisabledTicks(10);
+            setDisabledTicks(20);
             return;
         }
 
@@ -48,5 +48,11 @@ public class MovementB extends Check {
         this.lastX = x;
         this.lastZ = z;
         this.airTicks = isInAir ? this.airTicks + 1 : 0;
+
+        if(isDisabled()) {
+            this.lastDeltaXZ = 0;
+            this.lastX = x;
+            this.lastZ = z;
+        }
     }
 }

@@ -2,10 +2,7 @@ package net.sliceclient.ac.check;
 
 import lombok.Getter;
 import net.sliceclient.ac.SliceAC;
-import net.sliceclient.ac.check.checks.badpackets.BadPacketsA;
-import net.sliceclient.ac.check.checks.badpackets.BadPacketsB;
-import net.sliceclient.ac.check.checks.badpackets.BadPacketsC;
-import net.sliceclient.ac.check.checks.badpackets.BadPacketsD;
+import net.sliceclient.ac.check.checks.badpackets.*;
 import net.sliceclient.ac.check.checks.combat.CombatA;
 import net.sliceclient.ac.check.checks.movement.MovementA;
 import net.sliceclient.ac.check.checks.movement.MovementB;
@@ -33,6 +30,7 @@ public class CheckManager {
             BadPacketsB.class,
             BadPacketsC.class,
             BadPacketsD.class,
+            BadPacketsE.class,
 
             // Movement
             MovementA.class,
