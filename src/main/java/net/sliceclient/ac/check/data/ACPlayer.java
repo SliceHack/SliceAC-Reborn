@@ -39,4 +39,5 @@ public class ACPlayer {
     public boolean isFlying() {
         return player.isFlying() || player.isGliding();
     }
+
 }

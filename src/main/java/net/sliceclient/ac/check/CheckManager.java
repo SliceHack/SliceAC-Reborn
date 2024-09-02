@@ -2,12 +2,10 @@ package net.sliceclient.ac.check;
 
 import lombok.Getter;
 import net.sliceclient.ac.SliceAC;
+import net.sliceclient.ac.check.checks.TestCheck;
 import net.sliceclient.ac.check.checks.badpackets.*;
 import net.sliceclient.ac.check.checks.combat.CombatA;
-import net.sliceclient.ac.check.checks.movement.MovementA;
-import net.sliceclient.ac.check.checks.movement.MovementB;
-import net.sliceclient.ac.check.checks.movement.MovementC;
-import net.sliceclient.ac.check.checks.movement.MovementD;
+import net.sliceclient.ac.check.checks.movement.*;
 import net.sliceclient.ac.check.data.ACPlayer;
 import net.sliceclient.ac.packet.event.PacketEventManager;
 import org.apache.logging.log4j.LogManager;
@@ -37,6 +35,7 @@ public class CheckManager {
             MovementB.class,
             MovementC.class,
             MovementD.class,
+            MovementE.class,
 
             // Combat
             CombatA.class,
@@ -66,7 +65,7 @@ public class CheckManager {
             return;
         }
 
-        String str = String.format("§c§lSlice §8» §7%s (§c%s§7)", player.getPlayer().getName(), brand);
+        String str = String.format("§c§lSlice User §8» §7%s (§c%s§7)", player.getPlayer().getName(), brand);
         this.player.setBrand(brand);
 
         SliceAC.getPlugin(SliceAC.class).getBrandQueue().remove(player.getPlayer());

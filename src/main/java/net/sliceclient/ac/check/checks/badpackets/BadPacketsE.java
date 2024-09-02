@@ -32,19 +32,19 @@ public class BadPacketsE extends Check {
         EnumWrappers.PlayerAction playerAction = event.getPacket().getPlayerActions().read(0);
 
         if (playerAction == EnumWrappers.PlayerAction.START_SNEAKING) {
-            if(lastSneakingValue) {
+            if(this.lastSneakingValue) {
                 flag("lastSneaking=false");
             }
 
-            lastSneakingValue = true;
+            this.lastSneakingValue = true;
         }
 
         if(playerAction == EnumWrappers.PlayerAction.STOP_SNEAKING) {
-            if(!lastSneakingValue) {
+            if(!this.lastSneakingValue) {
                 flag("lastSneaking=true");
             }
 
-            lastSneakingValue = false;
+            this.lastSneakingValue = false;
         }
     }
 
@@ -55,6 +55,10 @@ public class BadPacketsE extends Check {
     })
     public void onTick(PacketEvent event) {
         this.updateDisabledTicks();
+
+        if(event.getPlayer().isDead()) {
+            setDisabledTicks(20);
+        }
     }
 
 }
