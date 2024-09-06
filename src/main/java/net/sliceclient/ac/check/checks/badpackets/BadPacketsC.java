@@ -1,5 +1,6 @@
 package net.sliceclient.ac.check.checks.badpackets;
 
+import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import net.sliceclient.ac.check.Check;
@@ -8,7 +9,7 @@ import net.sliceclient.ac.check.data.CheckInfo;
 import net.sliceclient.ac.packet.ACPacketType;
 import net.sliceclient.ac.packet.event.PacketInfo;
 
-@CheckInfo(name = "BadPackets", description = "Checks for invalid swinging")
+@CheckInfo(name = "BadPackets", description = "Invalid Swinging", maxViolations = 3)
 public class BadPacketsC extends Check {
 
     private boolean shouldBeChecking = false;
@@ -26,13 +27,13 @@ public class BadPacketsC extends Check {
             ACPacketType.POSITION_LOOK,
             ACPacketType.LOOK
     })
-    public void onSwing(PacketEvent event) {
-        if(event.getPacketType() == ACPacketType.ARM_ANIMATION.packetType()) {
+    public void onSwing(PacketEvent event, PacketType type) {
+        if(type == ACPacketType.ARM_ANIMATION.packetType()) {
             lastSwingTick = 0;
             return;
         }
 
-        if(event.getPacketType() == ACPacketType.USE_ENTITY.packetType()) {
+        if(type == ACPacketType.USE_ENTITY.packetType()) {
             lastAttackTick = 0;
             shouldBeChecking = event.getPacket().getEnumEntityUseActions().read(0).getAction() == EnumWrappers.EntityUseAction.ATTACK;
             return;

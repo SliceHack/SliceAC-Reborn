@@ -2,7 +2,6 @@ package net.sliceclient.ac.check;
 
 import lombok.Getter;
 import net.sliceclient.ac.SliceAC;
-import net.sliceclient.ac.check.checks.TestCheck;
 import net.sliceclient.ac.check.checks.badpackets.*;
 import net.sliceclient.ac.check.checks.combat.CombatA;
 import net.sliceclient.ac.check.checks.movement.*;
@@ -17,6 +16,8 @@ import java.util.*;
 
 @Getter
 public class CheckManager {
+
+    public static int REMOVE_TICK = 20; // so it keeps tickedLocations.size() < 20 so we can save memory
 
     public static Logger logger = LogManager.getLogger(CheckManager.class);
 
@@ -36,6 +37,7 @@ public class CheckManager {
             MovementC.class,
             MovementD.class,
             MovementE.class,
+            MovementF.class,
 
             // Combat
             CombatA.class,
@@ -102,6 +104,9 @@ public class CheckManager {
     }
 
     public static CheckManager getCheckManager(Player player) {
-        return managerMap.get(new ACPlayer(player));
+        return managerMap.keySet().stream()
+                .filter(acPlayer -> acPlayer.getPlayer().equals(player))
+                .map(managerMap::get)
+                .findFirst().orElse(null);
     }
 }

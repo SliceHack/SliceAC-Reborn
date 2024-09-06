@@ -57,6 +57,7 @@ public enum ACPacketType {
     ARM_ANIMATION,
     SPECTATE,
     USE_ITEM,
+    USE_ITEM_ON,
     BLOCK_PLACE,
     @Deprecated TRANSACTION,
     @Deprecated FLYING,

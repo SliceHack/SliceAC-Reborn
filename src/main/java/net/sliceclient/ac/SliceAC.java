@@ -13,7 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.messaging.PluginMessageListener;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -63,5 +63,9 @@ public final class SliceAC extends JavaPlugin implements Listener {
 
     private void registerBrandListener() {
         getServer().getMessenger().registerIncomingPluginChannel(this, "minecraft:brand", new BrandListener());
+    }
+
+    public void scheduleCommand(String command) {
+        getServer().getScheduler().runTaskLater(this, () -> getServer().dispatchCommand(getServer().getConsoleSender(), command), 1L);
     }
 }

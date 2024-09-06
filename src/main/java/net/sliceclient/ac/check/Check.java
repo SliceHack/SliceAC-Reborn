@@ -1,8 +1,10 @@
 package net.sliceclient.ac.check;
 
+import com.comphenix.protocol.events.PacketEvent;
 import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
 import net.sliceclient.ac.SliceAC;
 import net.sliceclient.ac.check.data.ACPlayer;
 import net.sliceclient.ac.check.data.CheckInfo;
@@ -39,16 +41,35 @@ public class Check {
     }
 
     public void flag(String message) {
+        String prefix = "§c§lSlice §8» §c ";
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("§c§lSlice §8» §c")
+        stringBuilder.append(prefix)
                 .append(player.getPlayer().getName()).append("§7 failed §c").append(name).append(" §7(§c").append(type)
-                .append("§7) §7|").append(" §c").append("x").append(++violations);
+                .append("§7) §7|").append(" §c").append("x").append(++violations)
+                .trimToSize();
 
         if(maxViolations != -1) {
             stringBuilder.append("§8/§c").append(maxViolations);
         }
 
-        Component component = Component.text(stringBuilder.toString()).hoverEvent(Component.text(message));
+        Component component = Component.text(stringBuilder.toString()).hoverEvent(
+
+                Component.text("§7" + description)
+                        .appendNewline().appendNewline()
+                        .append(Component.text("§7" + message))
+                        .appendNewline().appendNewline()
+                        .append(Component.text("§cClick to teleport to " + player.getPlayer().getName() + "§c."))
+                )
+
+                .clickEvent(ClickEvent.runCommand("/tp " + player.getPlayer().getName()));
+
+        if(violations == maxViolations && maxViolations != -1) {
+            String kickMessage = prefix + "§7You failed §c" + name + " §7(§c" + type + "§7) too many times".trim();
+            sendMessage(Component.text(prefix + "§7" + player.getPlayer().getName() + " §7was kicked for §c" + name + " §7(§c" + type + "§7)"));
+
+            SliceAC.getPlugin(SliceAC.class).scheduleCommand("kick " + player.getPlayer().getName() + " " + kickMessage);
+        }
+
         sendMessage(component);
     }
 

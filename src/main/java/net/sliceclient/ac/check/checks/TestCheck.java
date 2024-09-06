@@ -19,31 +19,9 @@ public class TestCheck extends Check {
     }
 
     @PacketInfo({
-            ACPacketType.ABILITIES
+            ACPacketType.USE_ITEM_ON
     })
     public void onUpdate(PacketEvent event) {
-        Object packetHandle = event.getPacket().getHandle();
-        Field[] methods = packetHandle.getClass().getDeclaredFields();
-        Method[] declaredMethods = packetHandle.getClass().getDeclaredMethods();
-
-        try {
-            debug("--------------------");
-            debug("Fields:");
-            for (Field field : methods) {
-                field.setAccessible(true);
-                debug(" - " + field.getName() + "=" + field.get(packetHandle) + " (" + field.getType().getName() + ")");
-            }
-            debug("      ");
-
-            debug("Methods:");
-            for (Method method : declaredMethods) {
-                method.setAccessible(true);
-                debug(" - " + method.getName() + "=" + method.getReturnType().getName());
-            }
-            debug("--------------------");
-        } catch (Exception e) {
-            debug("Error: " + e.getMessage());
-        }
     }
 
 }

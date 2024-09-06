@@ -1,6 +1,5 @@
 package net.sliceclient.ac.check.checks.badpackets;
 
-import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketEvent;
 import net.sliceclient.ac.check.Check;
 import net.sliceclient.ac.check.data.ACPlayer;
@@ -8,7 +7,7 @@ import net.sliceclient.ac.check.data.CheckInfo;
 import net.sliceclient.ac.packet.ACPacketType;
 import net.sliceclient.ac.packet.event.PacketInfo;
 
-@CheckInfo(name = "BadPackets", description = "Checks for invalid HotBar selections")
+@CheckInfo(name = "BadPackets", description = "Invalid HotBar Selection", maxViolations = 5)
 public class BadPacketsA extends Check {
 
     private int lastSlot = -1;

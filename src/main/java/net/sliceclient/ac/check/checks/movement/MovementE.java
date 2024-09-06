@@ -1,5 +1,6 @@
 package net.sliceclient.ac.check.checks.movement;
 
+import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import net.sliceclient.ac.check.Check;
@@ -11,7 +12,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-@CheckInfo(name = "Movement", description = "Detects NoSlowDown")
+@CheckInfo(name = "Movement", description = "NoSlowDown", maxViolations = 40)
 public class MovementE extends Check {
 
     private double lastX, lastY, lastZ, lastDeltaY;
@@ -29,8 +30,8 @@ public class MovementE extends Check {
             ACPacketType.BLOCK_DIG,
             ACPacketType.USE_ITEM
     })
-    public void onPacket(PacketEvent event) {
-        if (event.getPacketType() == ACPacketType.USE_ITEM.packetType()) {
+    public void onPacket(PacketEvent event, PacketType type) {
+        if (type == ACPacketType.USE_ITEM.packetType()) {
 
             EnumWrappers.Hand hand = event.getPacket().getHands().read(0);
             ItemStack itemStack = hand == EnumWrappers.Hand.MAIN_HAND ? player.getPlayer().getInventory().getItemInMainHand() : player.getPlayer().getInventory().getItemInOffHand();
@@ -39,7 +40,7 @@ public class MovementE extends Check {
             return;
         }
 
-        if (event.getPacketType() == ACPacketType.BLOCK_DIG.packetType()) {
+        if (type == ACPacketType.BLOCK_DIG.packetType()) {
             EnumWrappers.PlayerDigType digType = event.getPacket().getPlayerDigTypes().read(0);
 
             if (digType == EnumWrappers.PlayerDigType.RELEASE_USE_ITEM) {
@@ -69,8 +70,10 @@ public class MovementE extends Check {
         double speed = (Math.abs(Math.sin(Math.toRadians(yaw))) + Math.abs(Math.cos(Math.toRadians(yaw))))
                 * (0.1 + ((Math.abs(deltaY) > 0 || Math.abs(lastDeltaY) > 0) ? 0.25 : 0.1));
 
-        if(usingItem && runCheck && deltaXZ > speed && !isDisabled() && ++failed > 2) {
-            flag("deltaXZ=" + deltaXZ + " usingItem=" + usingItem + " ticks=" + failed + " predictedSpeed=" + speed);
+        double finalSpeed = speed * (player.getSpeedModifier() != 0 ? (player.getSpeedModifier() * 0.25) : 1);
+
+        if(usingItem && runCheck && deltaXZ > finalSpeed && !isDisabled() && ++failed > 2) {
+            flag("deltaXZ=" + deltaXZ + " usingItem=" + usingItem + " ticks=" + failed + " predictedSpeed=" + finalSpeed);
         }
 
         this.updateDisabledTicks();

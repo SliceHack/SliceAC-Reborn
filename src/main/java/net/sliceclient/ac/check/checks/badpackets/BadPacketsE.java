@@ -8,7 +8,7 @@ import net.sliceclient.ac.check.data.CheckInfo;
 import net.sliceclient.ac.packet.ACPacketType;
 import net.sliceclient.ac.packet.event.PacketInfo;
 
-@CheckInfo(name = "BadPackets", description = "Checks for invalid sneaking packet")
+@CheckInfo(name = "BadPackets", description = "Invalid Sneaking", maxViolations = 2)
 public class BadPacketsE extends Check {
 
     private boolean lastSneakingValue;

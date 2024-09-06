@@ -7,7 +7,7 @@ import net.sliceclient.ac.check.data.CheckInfo;
 import net.sliceclient.ac.packet.ACPacketType;
 import net.sliceclient.ac.packet.event.PacketInfo;
 
-@CheckInfo(name = "BadPackets", description = "Checks for duplicated aim")
+@CheckInfo(name = "BadPackets", description = "Duplicated Aim", maxViolations = 5)
 public class BadPacketsD extends Check {
 
     private int ticks; // sometimes mojang duplicates packets so it's gonna not be that good of a check

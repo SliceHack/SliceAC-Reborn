@@ -1,6 +1,5 @@
 package net.sliceclient.ac.check.checks.movement;
 
-import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketEvent;
 import net.sliceclient.ac.check.Check;
 import net.sliceclient.ac.check.data.ACPlayer;
@@ -8,7 +7,7 @@ import net.sliceclient.ac.check.data.CheckInfo;
 import net.sliceclient.ac.packet.ACPacketType;
 import net.sliceclient.ac.packet.event.PacketInfo;
 
-@CheckInfo(name = "Movement", description = "Checks for GroundSpoof")
+@CheckInfo(name = "Movement", description = "GroundSpoof", maxViolations = 10)
 public class MovementA extends Check {
 
     private int fakeOnGroundTicks;

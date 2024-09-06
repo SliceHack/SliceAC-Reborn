@@ -7,7 +7,8 @@ import net.sliceclient.ac.check.data.CheckInfo;
 import net.sliceclient.ac.packet.ACPacketType;
 import net.sliceclient.ac.packet.event.PacketInfo;
 
-@CheckInfo(name = "Movement", description = "Checks for 0 motion flight")
+/** experimental */
+@CheckInfo(name = "Movement", description = "0 Motion Flight")
 public class MovementD extends Check {
 
     private double lastY, lastDeltaY;

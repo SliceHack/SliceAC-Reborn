@@ -7,7 +7,7 @@ import net.sliceclient.ac.check.data.CheckInfo;
 import net.sliceclient.ac.packet.ACPacketType;
 import net.sliceclient.ac.packet.event.PacketInfo;
 
-@CheckInfo(name = "Movement", description = "Checks for Speed in air")
+@CheckInfo(name = "Movement", description = "Speed in Air", maxViolations = 50)
 public class MovementB extends Check {
 
     private double lastDeltaXZ, lastX, lastZ;
@@ -37,9 +37,10 @@ public class MovementB extends Check {
 
         boolean isInAir = !player.onGround();
 
+        double check = 0.01 + (player.getSpeedModifier() != 0 ? (player.getSpeedModifier() * 0.06) : 0);
         if(!isDisabled() && isInAir && airTicks < 10
-                && motionXZ > 0.01
-                && lastMotionX > 0.01) {
+                && motionXZ > check
+                && lastMotionX > check) {
             flag("motionXZ=" + motionXZ + " airTicks=" + airTicks);
         }
 

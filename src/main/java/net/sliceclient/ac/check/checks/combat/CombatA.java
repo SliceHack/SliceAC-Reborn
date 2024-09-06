@@ -1,5 +1,6 @@
 package net.sliceclient.ac.check.checks.combat;
 
+import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketEvent;
 import net.sliceclient.ac.check.Check;
 import net.sliceclient.ac.check.data.ACPlayer;
@@ -7,7 +8,7 @@ import net.sliceclient.ac.check.data.CheckInfo;
 import net.sliceclient.ac.packet.ACPacketType;
 import net.sliceclient.ac.packet.event.PacketInfo;
 
-@CheckInfo(name = "Combat", description = "Checks for AutoBlock")
+@CheckInfo(name = "Combat", description = "AutoBlock", maxViolations = 10)
 public class CombatA extends Check {
 
     private int lastReleaseBlockTick;
@@ -24,8 +25,8 @@ public class CombatA extends Check {
             ACPacketType.POSITION_LOOK,
             ACPacketType.LOOK,
     })
-    public void onPacket(PacketEvent event) {
-        if(event.getPacketType() == ACPacketType.USE_ENTITY.packetType()) {
+    public void onPacket(PacketEvent event, PacketType type) {
+        if(type == ACPacketType.USE_ENTITY.packetType()) {
             if(player.isBlocking() && lastBlockHit && lastReleaseBlockTick == 0) {
                 flag("lastReleaseBlockTick=" + lastReleaseBlockTick);
             }
