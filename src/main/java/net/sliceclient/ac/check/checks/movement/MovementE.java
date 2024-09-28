@@ -15,7 +15,6 @@ import org.bukkit.inventory.ItemStack;
 @CheckInfo(name = "Movement", description = "NoSlowDown", maxViolations = 40)
 public class MovementE extends Check {
 
-    private double lastX, lastY, lastZ, lastDeltaY;
     private boolean runCheck, usingItem;
     private int failed;
 
@@ -56,19 +55,12 @@ public class MovementE extends Check {
             return;
         }
 
-        double x = event.getPacket().getDoubles().read(0);
-        double y = event.getPacket().getDoubles().read(1);
-        double z = event.getPacket().getDoubles().read(2);
-
-        double deltaX = x - this.lastX;
-        double deltaY = y - this.lastY;
-        double deltaZ = z - this.lastZ;
-
-        double deltaXZ = Math.hypot(deltaX, deltaZ);
+        double deltaY = player.getMovementProcessor().deltaY();
+        double deltaXZ = player.getMovementProcessor().deltaHypotXZ();
 
         double yaw = event.getPacket().getFloat().read(0);
         double speed = (Math.abs(Math.sin(Math.toRadians(yaw))) + Math.abs(Math.cos(Math.toRadians(yaw))))
-                * (0.1 + ((Math.abs(deltaY) > 0 || Math.abs(lastDeltaY) > 0) ? 0.25 : 0.1));
+                * (0.1 + ((Math.abs(deltaY) > 0 || Math.abs(player.getMovementProcessor().getLastDeltaY()) > 0) ? 0.25 : 0.1));
 
         double finalSpeed = speed * (player.getSpeedModifier() != 0 ? (player.getSpeedModifier() * 0.25) : 1);
 
@@ -78,10 +70,6 @@ public class MovementE extends Check {
 
         this.updateDisabledTicks();
         this.runCheck = true;
-        this.lastX = x;
-        this.lastY = y;
-        this.lastZ = z;
-        this.lastDeltaY = deltaY;
     }
 
     public boolean canBeUsed(ItemStack itemStack) {

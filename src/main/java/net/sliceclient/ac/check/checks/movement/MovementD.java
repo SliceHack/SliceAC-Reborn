@@ -11,7 +11,6 @@ import net.sliceclient.ac.packet.event.PacketInfo;
 @CheckInfo(name = "Movement", description = "0 Motion Flight")
 public class MovementD extends Check {
 
-    private double lastY, lastDeltaY;
     private int offGroundTicks;
 
     public MovementD(ACPlayer player) {
@@ -25,17 +24,14 @@ public class MovementD extends Check {
             return;
         }
 
-        double y = event.getPacket().getDoubles().read(1);
-        double deltaY = y - lastY;
+        double deltaY = player.getMovementProcessor().deltaY();
 
-        if(offGroundTicks >= 20 && deltaY == 0 && lastDeltaY == 0 && !isDisabled()) {
-            flag("offGroundTicks=" + offGroundTicks + " deltaY=" + deltaY + " lastDeltaY=" + lastDeltaY);
+        if(offGroundTicks >= 20 && deltaY == 0 && player.getMovementProcessor().getLastDeltaY() == 0 && !isDisabled()) {
+            flag("offGroundTicks=" + offGroundTicks + " deltaY=" + deltaY + " lastDeltaY=" + player.getMovementProcessor().getLastDeltaY());
         }
 
         this.updateDisabledTicks();
         this.offGroundTicks = player.onGround() ? 0 : this.offGroundTicks + 1;
-        this.lastY = y;
-        this.lastDeltaY = deltaY;
     }
 
 }

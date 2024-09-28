@@ -13,7 +13,7 @@ import org.joml.Vector3f;
 @CheckInfo(name = "Movement", description = "Strafe", maxViolations = 50)
 public class MovementC extends Check {
 
-    private double lastStrafe, lastX, lastZ;
+    private double lastStrafe;
     private int failed, lastReward;
 
     public MovementC(ACPlayer player) {
@@ -28,20 +28,10 @@ public class MovementC extends Check {
             return;
         }
 
-        double x = event.getPacket().getDoubles().read(0);
-        double z = event.getPacket().getDoubles().read(2);
         @NotNull Vector velocity = event.getPlayer().getVelocity();
         Vector3f vector3f = new Vector3f((float) velocity.getX(), (float) velocity.getY(), (float) velocity.getZ());
 
-        if(lastX == x && lastZ == z) {
-            this.lastX = x;
-            this.lastZ = z;
-            return;
-        }
-
-        double deltaX = x - this.lastX;
-        double deltaZ = z - this.lastZ;
-        double strafe = Math.abs(Math.hypot(deltaX, deltaZ));
+        double strafe = player.getMovementProcessor().deltaHypotXZ();
 
         double check = 0.46 + (player.getSpeedModifier() * 0.06);
         double velocityDelta = Math.hypot(vector3f.x(), vector3f.z());
@@ -62,13 +52,9 @@ public class MovementC extends Check {
         this.updateDisabledTicks();
         this.lastReward++;
         this.lastStrafe = strafe;
-        this.lastX = x;
-        this.lastZ = z;
 
         if(isDisabled()) {
             this.lastStrafe = 0;
-            this.lastX = x;
-            this.lastZ = z;
         }
     }
 }

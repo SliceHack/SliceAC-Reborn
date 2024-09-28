@@ -10,7 +10,7 @@ import net.sliceclient.ac.packet.event.PacketInfo;
 @CheckInfo(name = "Movement", description = "Speed in Air", maxViolations = 50)
 public class MovementB extends Check {
 
-    private double lastDeltaXZ, lastX, lastZ;
+    private double lastDeltaXZ;
     private int airTicks;
 
     public MovementB(ACPlayer player) {
@@ -25,10 +25,7 @@ public class MovementB extends Check {
             return;
         }
 
-        double x = event.getPacket().getDoubles().read(0);
-        double z = event.getPacket().getDoubles().read(2);
-        double deltaXZ = Math.hypot(x - this.lastX, z - this.lastZ);
-
+        double deltaXZ = player.getMovementProcessor().deltaHypotXZ();
         double newDeltaXZ = deltaXZ * 0.98F;
         double motionXZ = deltaXZ - newDeltaXZ;
 
@@ -45,15 +42,6 @@ public class MovementB extends Check {
         }
 
         this.updateDisabledTicks();
-        this.lastDeltaXZ = deltaXZ;
-        this.lastX = x;
-        this.lastZ = z;
         this.airTicks = isInAir ? this.airTicks + 1 : 0;
-
-        if(isDisabled()) {
-            this.lastDeltaXZ = 0;
-            this.lastX = x;
-            this.lastZ = z;
-        }
     }
 }

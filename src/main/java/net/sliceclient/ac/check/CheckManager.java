@@ -7,6 +7,7 @@ import net.sliceclient.ac.check.checks.combat.CombatA;
 import net.sliceclient.ac.check.checks.movement.*;
 import net.sliceclient.ac.check.data.ACPlayer;
 import net.sliceclient.ac.packet.event.PacketEventManager;
+import net.sliceclient.ac.processor.movement.MovementProcessor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bukkit.Bukkit;
@@ -44,6 +45,7 @@ public class CheckManager {
     };
 
     private final List<Check> checks = new ArrayList<>();
+    private final MovementProcessor movementProcessor;
     private final ACPlayer player;
 
     public CheckManager(ACPlayer player) {
@@ -60,6 +62,8 @@ public class CheckManager {
                 logger.error("Failed to register check {}", clazz.getSimpleName(), e);
             }
         });
+
+        this.movementProcessor = new MovementProcessor(player);
 
         String brand = SliceAC.getPlugin(SliceAC.class).getBrandQueue().get(player.getPlayer());
         if(brand == null) {

@@ -8,6 +8,8 @@ import net.sliceclient.ac.SliceAC;
 import net.sliceclient.ac.check.CheckManager;
 import net.sliceclient.ac.check.data.ACPlayer;
 import net.sliceclient.ac.packet.event.PacketEventManager;
+import net.sliceclient.ac.processor.movement.MovementData;
+import net.sliceclient.ac.processor.movement.MovementProcessor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -38,16 +40,6 @@ public class PacketManager {
     }
 
     private void handlePacket(PacketType type, PacketEvent event, boolean sending) {
-        if(sending && type == PacketType.Play.Server.DAMAGE_EVENT) {
-            CheckManager playerCheckManager = CheckManager.getCheckManager(event.getPlayer());
-            if(playerCheckManager == null) return;
-
-            ACPlayer player = playerCheckManager.getPlayer();
-            if(player == null) return;
-
-            player.hurtTicks = 0; // just damaged
-        }
-
         if(!sending && type == ACPacketType.POSITION.packetType()
                 || type == ACPacketType.LOOK.packetType()
                 || type == ACPacketType.POSITION_LOOK.packetType()
@@ -59,7 +51,16 @@ public class PacketManager {
             ACPlayer player = playerCheckManager.getPlayer();
             if(player == null) return;
 
-            player.hurtTicks++; // count how long ago the player was hurt
+            double x = event.getPacket().getDoubles().read(0), y = event.getPacket().getDoubles().read(1), z = event.getPacket().getDoubles().read(2);
+            float yaw = event.getPacket().getFloat().read(0), pitch = event.getPacket().getFloat().read(1);
+            boolean onGround = event.getPacket().getBooleans().read(0);
+
+            MovementData movementData = new MovementData(
+                    MovementData.PositionType.valueOf(type.name()),
+                    x, y, z, yaw, pitch, onGround
+            );
+
+            playerCheckManager.getMovementProcessor().handle(movementData);
         }
 
         PacketEventManager.handle(type, event);

@@ -18,7 +18,7 @@ public class MovementA extends Check {
 
     @PacketInfo({ACPacketType.POSITION, ACPacketType.POSITION_LOOK})
     public void onPacket(PacketEvent event) {
-        boolean onGround = event.getPacket().getBooleans().read(0);
+        boolean onGround = player.getMovementProcessor().isOnGround();
 
         if(onGround && !player.onGround()) fakeOnGroundTicks++;
         else fakeOnGroundTicks = 0;

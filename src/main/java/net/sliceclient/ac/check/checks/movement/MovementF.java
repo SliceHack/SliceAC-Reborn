@@ -10,9 +10,7 @@ import net.sliceclient.ac.packet.event.PacketInfo;
 @CheckInfo(name = "Movement", description = "Flight", maxViolations = 100)
 public class MovementF extends Check {
 
-    private double lastY, lastDeltaY;
-    private int failed, offGroundTicks, lastReward;
-    private boolean wasOnGround;
+    private int failed, lastReward;
 
     public MovementF(ACPlayer player) {
         super(player);
@@ -24,29 +22,20 @@ public class MovementF extends Check {
             setDisabledTicks(20);
         }
 
-        double y = event.getPacket().getDoubles().read(1);
-        double deltaY = y - this.lastY;
+        double expectedDeltaY = player.getMovementProcessor().getOffGroundTicks() == 0 ? 0 : (player.getMovementProcessor().getLastDeltaY() - 0.08) * 0.98;
+        boolean invalid = (player.getMovementProcessor().getOffGroundTicks() > 15 && Math.abs(player.getMovementProcessor().deltaY() - expectedDeltaY) > (player.nearLiquid() ? 0.5 : 0.05));
 
-        double expectedDeltaY = offGroundTicks == 0 ? 0 : (this.lastDeltaY - 0.08) * 0.98;
-        boolean invalid = (offGroundTicks > 5 && Math.abs(deltaY - expectedDeltaY) > (player.nearLiquid() ? 0.5 : 0.05));
-
-        if (invalid && !isDisabled() && ++failed >= 2) {
-            flag("deltaY=" + deltaY + " expectedDeltaY=" + expectedDeltaY + " offGroundTicks=" + offGroundTicks);
+        if (invalid && !isDisabled() && ++failed >= 5) {
+            flag("deltaY=" + player.getMovementProcessor().deltaY() + " expectedDeltaY=" + expectedDeltaY + " offGroundTicks=" + player.getMovementProcessor().getOffGroundTicks());
             this.lastReward = 0;
         }
 
-        if(this.lastReward >= 10) {
+        if(this.lastReward >= 5) {
             this.failed = 0;
             this.lastReward = 0;
         }
 
-        if (player.onGround() && !wasOnGround) this.offGroundTicks = 0;
-        else if (!player.onGround()) this.offGroundTicks++;
-
         this.updateDisabledTicks();
         this.lastReward++;
-        this.wasOnGround = player.onGround();
-        this.lastY = y;
-        this.lastDeltaY = deltaY;
     }
 }

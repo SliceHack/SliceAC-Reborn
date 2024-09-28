@@ -2,6 +2,7 @@ package net.sliceclient.ac.check.data;
 
 import lombok.*;
 import net.sliceclient.ac.check.CheckManager;
+import net.sliceclient.ac.processor.movement.MovementProcessor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
@@ -95,6 +96,10 @@ public class ACPlayer {
         }
 
         return false;
+    }
+
+    public MovementProcessor getMovementProcessor() {
+        return checkManager.getMovementProcessor();
     }
 
     public boolean isBlocking() {

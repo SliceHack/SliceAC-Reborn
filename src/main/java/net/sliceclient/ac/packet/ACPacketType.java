@@ -63,6 +63,19 @@ public enum ACPacketType {
     @Deprecated FLYING,
     @Deprecated CHAT_PREVIEW;
 
+    public static ACPacketType getFromPacketType(PacketType type) {
+        try {
+            for (Field field : ACPacketType.class.getDeclaredFields()) {
+                if (field.getType() == ACPacketType.class && ((ACPacketType) field.get(null)).packetType() == type) {
+                    return (ACPacketType) field.get(null);
+                }
+            }
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException("Failed to get packet type for " + type, e);
+        }
+        return null;
+    }
+
     public PacketType packetType() {
         try {
             Field field = PacketType.Play.Client.class.getDeclaredField(name());
