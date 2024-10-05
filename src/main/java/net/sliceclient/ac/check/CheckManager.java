@@ -31,6 +31,7 @@ public class CheckManager {
             BadPacketsC.class,
             BadPacketsD.class,
             BadPacketsE.class,
+            BadPacketsF.class,
 
             // Movement
             MovementA.class,
@@ -39,6 +40,7 @@ public class CheckManager {
             MovementD.class,
             MovementE.class,
             MovementF.class,
+            MovementG.class,
 
             // Combat
             CombatA.class,

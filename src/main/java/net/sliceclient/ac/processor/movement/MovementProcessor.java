@@ -19,9 +19,8 @@ public class MovementProcessor implements Processor {
 
     private double x, y, z, lastX, lastY, lastZ, lastDeltaX, lastDeltaY, lastDeltaZ, lastDeltaHypotXZ;
     private float yaw, pitch, lastYaw, lastPitch, lastDeltaYaw, lastDeltaPitch;
-
-    private boolean onGround;
-    private int onGroundTicks, offGroundTicks;
+    private boolean onGround, sprinting, sneaking;
+    private int onGroundTicks, offGroundTicks, sprintTicks, sneakTicks;
 
     private boolean registered;
 
@@ -33,6 +32,7 @@ public class MovementProcessor implements Processor {
         this.lastX = this.x;
         this.lastY = this.y;
         this.lastZ = this.z;
+
         this.x = movement.x;
         this.y = movement.y;
         this.z = movement.z;
@@ -51,15 +51,23 @@ public class MovementProcessor implements Processor {
         this.lastDeltaPitch = this.deltaPitch();
 
         this.onGround = movement.onGround;
+        this.sprinting = movement.sprinting;
+        this.sneaking = movement.sneaking;
 
-        // so we ain't updating to fast
         int ticks = (int) ((System.currentTimeMillis() - this.lastUpdate) / 50);
-        if(ticks >= 1) {
+        if(ticks == 1) {
             this.onGroundTicks = this.onGround ? this.onGroundTicks + 1 : 0;
             this.offGroundTicks = this.onGround ? 0 : this.offGroundTicks + 1;
+
+            this.sprintTicks = this.sprinting ? this.sprintTicks + 1 : 0;
+            this.sneakTicks = this.sneaking ? this.sneakTicks + 1 : 0;
         }
 
         this.lastUpdate = System.currentTimeMillis();
+    }
+
+    public boolean isMoving() {
+        return this.deltaX() != 0 || this.deltaY() != 0 || this.deltaZ() != 0;
     }
 
     /** delta time 👅 **/

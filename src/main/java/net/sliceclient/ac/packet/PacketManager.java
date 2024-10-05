@@ -41,9 +41,7 @@ public class PacketManager {
 
     private void handlePacket(PacketType type, PacketEvent event, boolean sending) {
         if(!sending && type == ACPacketType.POSITION.packetType()
-                || type == ACPacketType.LOOK.packetType()
                 || type == ACPacketType.POSITION_LOOK.packetType()
-                || type == ACPacketType.GROUND.packetType()
         ) {
             CheckManager playerCheckManager = CheckManager.getCheckManager(event.getPlayer());
             if(playerCheckManager == null)return;
@@ -57,7 +55,7 @@ public class PacketManager {
 
             MovementData movementData = new MovementData(
                     MovementData.PositionType.valueOf(type.name()),
-                    x, y, z, yaw, pitch, onGround
+                    x, y, z, yaw, pitch, onGround, player.getPlayer().isSneaking(), player.getPlayer().isSprinting()
             );
 
             playerCheckManager.getMovementProcessor().handle(movementData);

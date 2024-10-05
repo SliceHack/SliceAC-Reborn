@@ -22,8 +22,9 @@ public class MovementF extends Check {
             setDisabledTicks(20);
         }
 
-        double expectedDeltaY = player.getMovementProcessor().getOffGroundTicks() == 0 ? 0 : (player.getMovementProcessor().getLastDeltaY() - 0.08) * 0.98;
-        boolean invalid = (player.getMovementProcessor().getOffGroundTicks() > 15 && Math.abs(player.getMovementProcessor().deltaY() - expectedDeltaY) > (player.nearLiquid() ? 0.5 : 0.05));
+        double expectedDeltaY = player.getMovementProcessor().getOffGroundTicks() == 0 ? 0 : (player.getMovementProcessor().getLastDeltaY() - 0.08) * 0.93;
+        boolean invalid = (player.getMovementProcessor().getOffGroundTicks() > 10
+                && Math.abs(player.getMovementProcessor().deltaY() - expectedDeltaY) > (player.nearLiquid() ? 0.7 : 0.07));
 
         if (invalid && !isDisabled() && ++failed >= 5) {
             flag("deltaY=" + player.getMovementProcessor().deltaY() + " expectedDeltaY=" + expectedDeltaY + " offGroundTicks=" + player.getMovementProcessor().getOffGroundTicks());

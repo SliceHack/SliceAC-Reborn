@@ -31,6 +31,8 @@ public class MovementC extends Check {
         @NotNull Vector velocity = event.getPlayer().getVelocity();
         Vector3f vector3f = new Vector3f((float) velocity.getX(), (float) velocity.getY(), (float) velocity.getZ());
 
+        if(!player.getMovementProcessor().isMoving()) return; // I don't understand whhy this works
+
         double strafe = player.getMovementProcessor().deltaHypotXZ();
 
         double check = 0.46 + (player.getSpeedModifier() * 0.06);
